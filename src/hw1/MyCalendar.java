@@ -30,7 +30,7 @@ public class MyCalendar {
 			System.out.print("   ");
 			
 		}
-		//int count1=0;
+		
 		int daysNo = dayNumbInMonth(cali);
 		int [] mCal = new int[daysNo];
 		for(int j =0;j<daysNo;j++) {
