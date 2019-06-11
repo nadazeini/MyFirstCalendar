@@ -22,25 +22,36 @@ public class MyCalendar {
 		LocalDate cali = LocalDate.now();
 		System.out.print("    ");
 		printTitle(cali);
-		System.out.println("Su Mo Tu We Th Fr Sa");
-	//	System.out.println(dayNumbInMonth(cali));
+		System.out.println(" Su Mo Tu We Th Fr Sa");
+	
 		int count=0;
-		for(int i =0;i<=firstDay();i++) {
-			System.out.print("  ");
-			count ++;
-		}
-		int daysNo = dayNumbInMonth(cali);
-		int [] mCal = new int[daysNo];
-		for(int i =1;i<=daysNo;i++) {
-			System.out.print("  " +i);
-			count++;
+		int first = firstDay();
+		for(int i =0;i<first;i++) {
+			System.out.print("   ");
 			
 		}
-		while(count%7==0) {
+		//int count1=0;
+		int daysNo = dayNumbInMonth(cali);
+		int [] mCal = new int[daysNo];
+		for(int j =0;j<daysNo;j++) {
+			mCal[j]=j;
+		}
+		for(int i =1;i<=daysNo;i++) {
+			if(i==getDay()) {
+				System.out.print("["+i+"]");
+			}
+			
+			else if(i<10) {
+				System.out.print("  "+i);
+			}
+			else {
+			System.out.print(" " +i);}
+		first = first +1;
+		if(first%7==0) {
 			System.out.println();
 		}
 		
-
+		}
 	}
 
 	/**
@@ -57,7 +68,8 @@ public class MyCalendar {
 	 * whether it's 365 or 366
 	 */
 	public static boolean isLeap() {
-		LocalDate cal = LocalDate.of(Calendar.YEAR,12, 31);
+		LocalDate cal = LocalDate.now();
+		LocalDate cal1 = LocalDate.of(cal.getYear(),12, 31);
 		
 		int dayOfYear = cal.getDayOfYear(); 
 		return dayOfYear>365;
@@ -91,8 +103,9 @@ public class MyCalendar {
 	 */
 
 	public static int firstDay() {
-		LocalDate cal = LocalDate.of(Calendar.YEAR, Calendar.MONTH, 1);
-		String weekday = cal.getDayOfWeek().toString().toLowerCase();
+		LocalDate cal = LocalDate.now();
+		LocalDate cal1 = LocalDate.of(cal.getYear(), cal.getMonth(), 1);
+		String weekday = cal1.getDayOfWeek().toString().toLowerCase();
 		int weekdayNum = 0;
 		switch (weekday) {
 		case "monday":
@@ -125,6 +138,11 @@ public class MyCalendar {
 		System.out.println("Select one of the following options:");
 		System.out.println("[V]iew by  [C]reate, [G]o to [E]vent list [D]elete  [Q]uit");
 
+	}
+	public static int getDay() {
+		LocalDate cal = LocalDate.now();
+	
+		return cal.getDayOfMonth();
 	}
 
 }
