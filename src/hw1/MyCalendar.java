@@ -1,6 +1,7 @@
 package hw1;
 
 import java.time.DayOfWeek;
+import java.util.Scanner;
 /**
  * this class defines underlying data structure to hold events 
  * Java 8.0 API. 
@@ -23,34 +24,34 @@ public class MyCalendar {
 		System.out.print("    ");
 		printTitle(cali);
 		System.out.println(" Su Mo Tu We Th Fr Sa");
-	
-		int count=0;
+
+		int count = 0;
 		int first = firstDay();
-		for(int i =0;i<first;i++) {
+		for (int i = 0; i < first; i++) {
 			System.out.print("   ");
-			
+
 		}
-		
+
 		int daysNo = dayNumbInMonth(cali);
-		int [] mCal = new int[daysNo];
-		for(int j =0;j<daysNo;j++) {
-			mCal[j]=j;
+		int[] mCal = new int[daysNo];
+		for (int j = 0; j < daysNo; j++) {
+			mCal[j] = j;
 		}
-		for(int i =1;i<=daysNo;i++) {
-			if(i==getDay()) {
-				System.out.print("["+i+"]");
+		for (int i = 1; i <= daysNo; i++) {
+			if (i == getDay()) {
+				System.out.print("[" + i + "]");
 			}
-			
-			else if(i<10) {
-				System.out.print("  "+i);
+
+			else if (i < 10) {
+				System.out.print("  " + i);
+			} else {
+				System.out.print(" " + i);
 			}
-			else {
-			System.out.print(" " +i);}
-		first = first +1;
-		if(first%7==0) {
-			System.out.println();
-		}
-		
+			first = first + 1;
+			if (first % 7 == 0) {
+				System.out.println();
+			}
+
 		}
 	}
 
@@ -61,18 +62,17 @@ public class MyCalendar {
 		System.out.println(c.getMonth().toString().charAt(0) + c.getMonth().toString().substring(1).toLowerCase() + " "
 				+ c.getYear());
 	}
+
 	/**
-	 * @return true if current year is leap
-	 * checks if year is leap
-	 * get the day number of the last day of the year and check
-	 * whether it's 365 or 366
+	 * @return true if current year is leap checks if year is leap get the day
+	 *         number of the last day of the year and check whether it's 365 or 366
 	 */
 	public static boolean isLeap() {
 		LocalDate cal = LocalDate.now();
-		LocalDate cal1 = LocalDate.of(cal.getYear(),12, 31);
-		
-		int dayOfYear = cal.getDayOfYear(); 
-		return dayOfYear>365;
+		LocalDate cal1 = LocalDate.of(cal.getYear(), 12, 31);
+
+		int dayOfYear = cal.getDayOfYear();
+		return dayOfYear > 365;
 	}
 
 	/**
@@ -81,20 +81,19 @@ public class MyCalendar {
 	 */
 	public static int dayNumbInMonth(LocalDate c) {
 		String month = c.getMonth().toString();
-		if(month.equals("JANUARY")||month.equals("MARCH")|| month.equals("MAY") || 
-				month.equals("JULY") || month.equals("AUGUST") || month.equals("OCTOBER")|| month.equals("DECEMBER")) {
+		if (month.equals("JANUARY") || month.equals("MARCH") || month.equals("MAY") || month.equals("JULY")
+				|| month.equals("AUGUST") || month.equals("OCTOBER") || month.equals("DECEMBER")) {
 			return 31;
-		}
-		else if(month.equals("FEBRUARY"))
-		{
-			if(isLeap())
+		} else if (month.equals("FEBRUARY")) {
+			if (isLeap())
 				return 29;
-			else return 28;
+			else
+				return 28;
 		}
 		return 30;
-		
-		
+
 	}
+
 	/**
 	 * get date of the first day of the current month
 	 * 
@@ -139,10 +138,76 @@ public class MyCalendar {
 		System.out.println("[V]iew by  [C]reate, [G]o to [E]vent list [D]elete  [Q]uit");
 
 	}
+	/**
+	 * get day of the month of the current date
+	 * @return current day int
+	 */
+
 	public static int getDay() {
 		LocalDate cal = LocalDate.now();
-	
+
 		return cal.getDayOfMonth();
 	}
+	/**
+	 * get today's date
+	 */
+	public static void printTodayDate() {
+		
+		LocalDate today = LocalDate.now();
+		  
+         
 
+        // To print a calendar in a specified format. 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E, MMMM d, yyyy");
+        System.out.println(formatter.format(today));
+	}
+
+	/**
+	 * view: prompts user to decide which view format to display
+	 */
+	public static void view() {
+		
+		Scanner input = new Scanner(System.in);
+		
+		System.out.println("[D]ay view or [M]view ?");
+		char DorM = input.nextLine().charAt(0);
+		if(DorM=='D') {
+			printTodayDate();
+		}
+		else if (DorM=='M') {
+			
+		}
+		else
+		{
+			
+		}
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
