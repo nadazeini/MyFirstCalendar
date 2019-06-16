@@ -1,18 +1,11 @@
-package hw1;
+package calendar;
 
-import java.io.File;
-import java.time.LocalTime;
-import java.util.Scanner;
-/**
- * 
- * @author nadazeini
- *
- */
+import hw1.TimeInterval;
+
 public class Event {
-
 	private String eventName;
 	private TimeInterval timeInterval;
-
+	
 	public Event(String eventName, TimeInterval timeInterval ) {
 		this.eventName= eventName;
 		this.timeInterval= timeInterval;
@@ -33,10 +26,8 @@ public class Event {
     	return timeInterval;
     }
     public String toString() {
-    	return eventName + ": "+ timeInterval.toString();
+    	return eventName + " : "+ timeInterval;
     }
-   
-	
     
-
+    
 }

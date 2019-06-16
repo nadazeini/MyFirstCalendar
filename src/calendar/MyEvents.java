@@ -1,4 +1,4 @@
-package hw1;
+package calendar;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -196,8 +196,6 @@ public class MyEvents {
 				SimpleDateFormat format = new SimpleDateFormat("MM/dd/yy");
 				
 				
-				startDateCal.setTime(startDate);
-				endDateCal.setTime(endDate);
 				
 				
 				ArrayList<Calendar> datesRegular = datesWithEvents(startDateCal, endDateCal,eventDays);

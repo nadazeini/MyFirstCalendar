@@ -7,6 +7,8 @@ import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Locale;
 
+import calendar.MyEvents;
+
 /**
  *  Tester of the calendar 
  * Java 8.0 API. 
@@ -18,7 +20,7 @@ public class MyCalendarTester {
 	public static void main(String [] args) throws Exception {
 		MyCalendar calendar = new MyCalendar();
 		calendar.displayCurrentMonth();
-		Event event = new Event(null, null);
+		//Event event = new Event(null, null);
 		//event.loadEvents();
 		//event.printEventsFile();
 		//calendar.displayMM();
@@ -38,8 +40,13 @@ public class MyCalendarTester {
 		cal.setTime(sdf.parse("06/12/19"));// all done
 		myevents.SomethingEvents(cal);
 		*/
-		Calendar trying =myevents.stringToCalendar("06/12/19");
-		myevents.SomethingEvents(trying);
+		//Calendar trying =myevents.stringToCalendar("06/12/19");
+		//myevents.SomethingEvents(trying);
 		
+		//EventsManager manager = new EventsManager();
+		//manager.printEventsOnDate("10/3/19");
+		DateManager dateManager = new DateManager();
+		System.out.println(dateManager.stringToCalendar("10/3/19"));
+		System.out.println(dateManager.datesBetween("06/12/19", "07/12/19"));
 	}
 }

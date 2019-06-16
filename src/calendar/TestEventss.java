@@ -1,6 +1,10 @@
-package hw1;
+package calendar;
 
 import java.util.*;
+
+import hw1.Event;
+import hw1.TimeInterval;
+
 import java.io.*;
 import java.sql.Time;
 import java.text.DateFormat;
@@ -47,30 +51,9 @@ public class Event1 {
 		return timeInterval;
 	}
 
-	/**
-	 * finds file and opens it
-	 */
-	public static void loadEvents() {
+	
 
-		try {
-			fileScanner = new Scanner(new File("events.txt"));
-			System.out.println();
-			System.out.println("Loading is done!");
-
-		} catch (Exception error) {
-			System.out.println("Error loading file: Possibily not found");
-
-		}
-	}
-
-	/**
-	 * 
-	 * @param line
-	 * @return if event is regular
-	 */
-	public static boolean isRegular(String line) {
-		return line.length() - line.replaceAll(" ", "").length() >= 4;
-	}
+	
 
 	/**
 	 * reads events file
