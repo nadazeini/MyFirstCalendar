@@ -18,11 +18,12 @@ public class MyCalendar {
 	 * @return current month in calendar format
 	 * 
 	 */
-	public static void displayCurrentMonth() {
+	
+	public static void displayMonthView(LocalDate cal) {
 
-		LocalDate cali = LocalDate.now();
+		
 		System.out.print("    ");
-		printTitle(cali);
+		printTitle(cal);
 		System.out.println(" Su Mo Tu We Th Fr Sa");
 
 		int count = 0;
@@ -32,7 +33,7 @@ public class MyCalendar {
 
 		}
 
-		int daysNo = dayNumbInMonth(cali);
+		int daysNo = dayNumbInMonth(cal);
 		int[] mCal = new int[daysNo];
 		for (int j = 0; j < daysNo; j++) {
 			mCal[j] = j;
@@ -55,6 +56,9 @@ public class MyCalendar {
 		}
 	}
 
+	public void nextMonthView(LocalDate cal) {
+		cal = cal.
+	}
 	/**
 	 * print month name and year
 	 */
@@ -101,7 +105,7 @@ public class MyCalendar {
 	 * 
 	 */
 
-	public static int firstDay() {
+	public static int firstDay(cal) {
 		LocalDate cal = LocalDate.now();
 		LocalDate cal1 = LocalDate.of(cal.getYear(), cal.getMonth(), 1);
 		String weekday = cal1.getDayOfWeek().toString().toLowerCase();
@@ -133,11 +137,58 @@ public class MyCalendar {
 		return weekdayNum;
 	}
 
-	public static void displayMM() {
+	public static void displayMM() throws Exception {
 		System.out.println("Select one of the following options:");
 		System.out.println("[V]iew by  [C]reate, [G]o to [E]vent list [D]elete  [Q]uit");
+		Scanner input = new Scanner(System.in);
+		char option = input.nextLine().charAt(0);
+		switch(option){
+			case 'V':
+				view();
+				break;
+			case'C':
+				create();
+				break;
+			case'G':
+				goTo();
+				break;
+			case'E':
+				
+				eventList();
+				break;
+			case'D':
+				deleteOption();
+			case'Q':
+				quit();
+			
+		}
 
 	}
+	public static void quit() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public static void deleteOption() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public static void eventList() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public static void goTo() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public static void create() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	/**
 	 * get day of the month of the current date
 	 * @return current day int
@@ -164,15 +215,17 @@ public class MyCalendar {
 
 	/**
 	 * view: prompts user to decide which view format to display
+	 * @throws Exception 
 	 */
-	public static void view() {
-		
+	public static void view() throws Exception {
+		EventsManager eventManager = new EventsManager();
 		Scanner input = new Scanner(System.in);
 		
 		System.out.println("[D]ay view or [M]view ?");
 		char DorM = input.nextLine().charAt(0);
 		if(DorM=='D') {
 			printTodayDate();
+			eventManager.printEventsOnDate(eventManager.dateToString(LocalDate.now()));
 		}
 		else if (DorM=='M') {
 			
@@ -185,29 +238,30 @@ public class MyCalendar {
 		
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
