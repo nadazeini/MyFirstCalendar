@@ -239,6 +239,7 @@ if(foundRegularDateEvent(stringToDate(dateWanted),startDate, endDate, occursOn))
 			}
 		
 	}
+		System.out.println();
 		fileScanner.close();
 		
 	}

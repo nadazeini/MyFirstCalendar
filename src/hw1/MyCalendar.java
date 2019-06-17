@@ -249,18 +249,21 @@ public class MyCalendar {
 
 		return cal.getDayOfMonth();
 	}
-	/**
-	 * get today's date
-	 */
-	public static void printTodayDate() {
-		
-		LocalDate today = LocalDate.now();
+/**
+ * prints date from dd/MM/yy format to E, MMMM d, yyyy format
+ * @param dateFromFile
+ */
+	public static void printCompleteDate(String dateFromFile) {
+		EventsManager event = new EventsManager();
+	
+		LocalDate dateObj= 	event.stringToDate(dateFromFile);
 		  
          
 
         // To print a calendar in a specified format. 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E, MMMM d, yyyy");
-        System.out.println(formatter.format(today));
+       System.out.println();
+		System.out.println(formatter.format(dateObj));
 	}
 
 	/**
@@ -268,46 +271,106 @@ public class MyCalendar {
 	 * @throws Exception 
 	 */
 	public static void view() throws Exception {
-		EventsManager eventManager = new EventsManager();
+		EventsManager eventsManager = new EventsManager();
 		Scanner input = new Scanner(System.in);
 		char c = 0 ;
-		int count = 0,count1 = 0,count2 = 0;
+		int count = 0;
 		LocalDate today = LocalDate.now();
 		System.out.println("[D]ay view or [M]view ?");
 		char DorM = input.nextLine().charAt(0);
+		char prevNext = 0;
 		if(DorM=='D'|| DorM=='d') {
-			printTodayDate();
-			eventManager.printEventsOnDate(eventManager.dateToString(LocalDate.now()));
-		}
-		else if (DorM=='M'|| DorM=='m') {
-			displayMonthView(today);
-			System.out.println();
+			
+			printCompleteDate(eventsManager.dateToString(today));
+			eventsManager.printEventsOnDate(eventsManager.dateToString(today));
+
 			System.out.println("[P]revious or [N]ext or [G]o back to main menu ? ");
-			char prevNext = input.nextLine().charAt(0);
-			while(prevNext=='P' || prevNext=='p')
-			{
-					displayMonthView(today.minusMonths(count+1));
-					count++;
-					System.out.println("[P]revious or [N]ext or [G]o back to main menu ? ");
-					c=input.nextLine().charAt(0);
+			
+			 prevNext = input.nextLine().charAt(0);
+			 do {
+
+				 
+					if (prevNext=='P' || prevNext=='p')
+					{
+							today=today.minusDays(1);
+							
+							printCompleteDate(eventsManager.dateToString(today));
+							eventsManager.printEventsOnDate(eventsManager.dateToString(today));
+							System.out.println("[P]revious or [N]ext or [G]o back to main menu ? ");
+							prevNext=input.nextLine().charAt(0);
+							
+						
+						}
+						
+					if(prevNext=='n'|| prevNext=='N'){
+						today=today.plusDays(1);
+						
+						printCompleteDate(eventsManager.dateToString(today));
+						eventsManager.printEventsOnDate(eventsManager.dateToString(today));
 					
-				}
+						System.out.println("[P]revious or [N]ext or [G]o back to main menu ? ");
+						prevNext=input.nextLine().charAt(0);
+						
+					}
+					 if(prevNext=='G'||prevNext=='g') {
+
+							mainMenu();
+				
+					}
+					}
+					while(prevNext!='G'||prevNext!='g');
 				
 			
-			else if(prevNext=='n'|| prevNext=='N') {
-		
-				displayMonthView(today.plusMonths(count+1));
-				count++;
-				System.out.println("[P]revious or [N]ext or [G]o back to main menu ? ");
-				c=input.nextLine().charAt(0);
-			}
 		}
+		else if (DorM=='M'|| DorM=='m') {
+			
+			displayMonthView(today);
+			System.out.println();
+		
+
+			System.out.println("[P]revious or [N]ext or [G]o back to main menu ? ");
+			
+			 prevNext = input.nextLine().charAt(0);
+			do {
+
+	 
+			if (prevNext=='P' || prevNext=='p')
+			{
+					today=today.minusMonths(1);
+					displayMonthView(today);
+					
+					System.out.println("[P]revious or [N]ext or [G]o back to main menu ? ");
+					prevNext=input.nextLine().charAt(0);
+					
+				
+				}
+				
+			if(prevNext=='n'|| prevNext=='N'){
+				today=today.plusMonths(1);
+				displayMonthView(today);
+				displayMonthView(today);
+			
+				System.out.println("[P]revious or [N]ext or [G]o back to main menu ? ");
+				prevNext=input.nextLine().charAt(0);
+				
+			}
+			 if(prevNext=='G'||prevNext=='g') {
+
+					mainMenu();
+		
+			}
+			}
+			while(prevNext!='G'||prevNext!='g');
+		
+				
+		
 	
+		
+}
+	}
+}
 	
 
-	           mainMenu();
-	}
-	
 	
 	
 	
