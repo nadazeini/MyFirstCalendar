@@ -17,15 +17,16 @@ import calendar.MyEvents;
  */
 public class MyCalendarTester {
 
+	public static void runCalendar() throws Exception {
+		
+		MyCalendar cal = new MyCalendar();
+		cal.mainMenu();
+		
+	}
 	
 	public static void main(String [] args) throws Exception {
-		MyCalendar calendar = new MyCalendar();
-		calendar.displayCurrentMonth();
-
-	LocalDate date = LocalDate.now();
-	System.out.println();
-		calendar.displayMM();
-		
+	
+		runCalendar();
 	
 }
 }

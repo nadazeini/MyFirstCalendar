@@ -1,33 +1,58 @@
 package hw1;
 
+import java.text.ParseException;
 import java.time.DayOfWeek;
 import java.util.Scanner;
 /**
  * this class defines underlying data structure to hold events 
  * Java 8.0 API. 
  * @author: Nada El Zeini
+ * @return 
  */
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 public class MyCalendar {
-
 	/**
-	 * @return current month in calendar format
+	 * returns day number of events in a specific month and year 
+	 * @param month
+	 * @param year
+	 * @return
+	 * @throws ParseException
+	 */
+	public static  ArrayList<Integer> dayOfMonthWithEvent(int month,int year) throws ParseException{
+		EventsManager events = new EventsManager();
+		ArrayList<Integer> list = new ArrayList<>();
+		for(int i=0;i<events.allEventDates().size();i++) {
+			if(events.allEventDates().get(i).getMonthValue()==month &&
+			events.allEventDates().get(i).getYear()==year)
+		
+		list.add(events.allEventDates().get(i).getDayOfMonth());
+		
+		}
+		return list;
+		}
+	/**
+	 * @return month view of date calendar format
+	 * @throws ParseException 
 	 * 
 	 */
 	
-	public static void displayMonthView(LocalDate cal) {
-
-		
+	public static void displayMonthView(LocalDate cal) throws ParseException {
 		System.out.print("    ");
+		int year = cal.getYear();
+		int month =cal.getMonthValue();
+		LocalDate today = LocalDate.now();
+		ArrayList<Integer> daysWithEvent = dayOfMonthWithEvent(month,year);
 		printTitle(cal);
 		System.out.println(" Su Mo Tu We Th Fr Sa");
 
 		int count = 0;
-		int first = firstDay();
+		int first = firstDay(cal);
 		for (int i = 0; i < first; i++) {
 			System.out.print("   ");
 
@@ -38,11 +63,18 @@ public class MyCalendar {
 		for (int j = 0; j < daysNo; j++) {
 			mCal[j] = j;
 		}
+		
+		//brackets between current date
+		if(cal.equals(today)){
 		for (int i = 1; i <= daysNo; i++) {
+		
 			if (i == getDay()) {
 				System.out.print("[" + i + "]");
+				
 			}
-
+			else if(daysWithEvent.contains(i)) {
+				System.out.print("{"+i+"}");
+			}
 			else if (i < 10) {
 				System.out.print("  " + i);
 			} else {
@@ -54,11 +86,29 @@ public class MyCalendar {
 			}
 
 		}
-	}
+		}
+			else
+			{for (int i = 1; i <= daysNo; i++) {
+					if(daysWithEvent.contains(i)) {
+						System.out.print("{"+i+"}");
+					}
+					else if (i < 10) {
+						System.out.print("  " + i);
+					} else {
+						System.out.print(" " + i);
+					}
+					first = first + 1;
+					if (first % 7 == 0) {
+						System.out.println();
+					}
 
-	public void nextMonthView(LocalDate cal) {
-		cal = cal.
-	}
+			}
+			}
+
+		System.out.println();
+		}		
+	
+	
 	/**
 	 * print month name and year
 	 */
@@ -105,8 +155,8 @@ public class MyCalendar {
 	 * 
 	 */
 
-	public static int firstDay(cal) {
-		LocalDate cal = LocalDate.now();
+	public static int firstDay(LocalDate cal) {
+		
 		LocalDate cal1 = LocalDate.of(cal.getYear(), cal.getMonth(), 1);
 		String weekday = cal1.getDayOfWeek().toString().toLowerCase();
 		int weekdayNum = 0;
@@ -137,7 +187,7 @@ public class MyCalendar {
 		return weekdayNum;
 	}
 
-	public static void displayMM() throws Exception {
+	public static void mainMenu() throws Exception {
 		System.out.println("Select one of the following options:");
 		System.out.println("[V]iew by  [C]reate, [G]o to [E]vent list [D]elete  [Q]uit");
 		Scanner input = new Scanner(System.in);
@@ -220,35 +270,43 @@ public class MyCalendar {
 	public static void view() throws Exception {
 		EventsManager eventManager = new EventsManager();
 		Scanner input = new Scanner(System.in);
-		
+		char c = 0 ;
+		int count = 0,count1 = 0,count2 = 0;
+		LocalDate today = LocalDate.now();
 		System.out.println("[D]ay view or [M]view ?");
 		char DorM = input.nextLine().charAt(0);
-		if(DorM=='D') {
+		if(DorM=='D'|| DorM=='d') {
 			printTodayDate();
 			eventManager.printEventsOnDate(eventManager.dateToString(LocalDate.now()));
 		}
-		else if (DorM=='M') {
+		else if (DorM=='M'|| DorM=='m') {
+			displayMonthView(today);
+			System.out.println();
+			System.out.println("[P]revious or [N]ext or [G]o back to main menu ? ");
+			char prevNext = input.nextLine().charAt(0);
+			while(prevNext=='P' || prevNext=='p')
+			{
+					displayMonthView(today.minusMonths(count+1));
+					count++;
+					System.out.println("[P]revious or [N]ext or [G]o back to main menu ? ");
+					c=input.nextLine().charAt(0);
+					
+				}
+				
 			
+			else if(prevNext=='n'|| prevNext=='N') {
+		
+				displayMonthView(today.plusMonths(count+1));
+				count++;
+				System.out.println("[P]revious or [N]ext or [G]o back to main menu ? ");
+				c=input.nextLine().charAt(0);
+			}
 		}
-		else
-		{
-			
-		}
-		
-		
-		
+	
+	
+
+	           mainMenu();
 	}
-}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
