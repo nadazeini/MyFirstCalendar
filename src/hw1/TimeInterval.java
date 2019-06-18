@@ -24,17 +24,14 @@ public class TimeInterval  {
 	public TimeInterval(LocalTime start,LocalTime end) throws Exception {
 		this.start = start;
 		this.end = end;
+	
 		
-		//if(start.isAfter(end))
-		{
-			//throw new Exception("Start time should be less than end time");
+	}
+	public boolean noOverlap(TimeInterval t1,TimeInterval t2) {
+		   return (t1.start.isBefore(t2.start)&& t1.end.isBefore(t2.start))
+		   || (t1.start.isAfter(t2.end) && t1.end.isAfter(t2.end)) ;
 		}
-		
-	}
-	public boolean timeOverlap(TimeInterval t1,TimeInterval t2) {
-		return t1.start.isAfter(t2.start) && t1.start.isBefore(t2.start)
-				|| t2.start.isAfter(t1.start) && t2.start.isBefore(t1.start);
-	}
+	
 	public void setStart() {
 		this.start=start;
 	}
@@ -49,8 +46,13 @@ public class TimeInterval  {
 	}
 	public String toString() {
 
-		return start.format(DateTimeFormatter.ofPattern("HH:mm")) 
-				+ "-"+end.format(DateTimeFormatter.ofPattern("HH:mm"));
+		return start.format(DateTimeFormatter.ofPattern("H:mm")) 
+				+ "-"+end.format(DateTimeFormatter.ofPattern("H:mm"));
+	}
+	public String toString1() {
+
+		return start.format(DateTimeFormatter.ofPattern("H:mm")) 
+				+ " "+end.format(DateTimeFormatter.ofPattern("H:mm"));
 	}
 
  

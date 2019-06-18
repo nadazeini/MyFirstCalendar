@@ -36,6 +36,7 @@ public class Event implements Comparable<Event> {
     public String toString() {
     	return eventName + ": "+ timeInterval.toString();
     }
+   
 	@Override
 	public int compareTo(Event e) {
 			if(this.getTimeInterval().getStart().isAfter(e.getTimeInterval().getStart())) {

@@ -55,10 +55,11 @@ public String  toString() {
 	
 	
 }
-
-
-
-
+public String add() {
+    	String name = event.getEventName()+"\n";
+    	return name+ eventsManager.dateToString(getDate())+" "+event.getTimeInterval().toString1();
+    }
 }
+
 
 

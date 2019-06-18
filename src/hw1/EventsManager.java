@@ -59,10 +59,32 @@ public class EventsManager {
 		 * calendar = Calendar.getInstance();
 		 * calendar.setTime(formatter.parse(dateStr)); return calendar.getTime();
 		 */
+		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yy");
 		LocalDate localDate = LocalDate.parse(dateStr, formatter);
 		return localDate;
 	}
+	public LocalDate stringToDate1(String dateStr) {
+
+		/*
+		 * SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy"); Calendar
+		 * calendar = Calendar.getInstance();
+		 * calendar.setTime(formatter.parse(dateStr)); return calendar.getTime();
+		 */
+		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yy");
+		LocalDate localDate = LocalDate.parse(dateStr, formatter);
+		return localDate;
+	}
+	
+	public LocalTime stringToTime(String timeStr) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("H:MM");
+		LocalTime localTime = LocalTime.parse(timeStr, formatter);
+		return localTime;
+	}
+	
+	
+	
 	/**
 	 * gets all dates between 2 dates 
 	 * @param start
@@ -98,17 +120,19 @@ public class EventsManager {
  * @return
  */
 	public String dateToString(LocalDate date) {
-
-		String dateStr = date.format(DateTimeFormatter.ofPattern("M/d/yy"));
+//if less than 10 parse it differently
+		String dateStr = date.format(DateTimeFormatter.ofPattern("MM/dd/yy"));
 		return dateStr;
 	}
+	
+
 /**
  * get all dates with events happening regularly
  * @param day
  * @param totalDates
  * @return
  */
-public ArrayList<LocalDate> datesWithEvents(String day,ArrayList<LocalDate> totalDates){
+public static ArrayList<LocalDate> datesWithEvents(String day,ArrayList<LocalDate> totalDates){
 	
 	ArrayList<LocalDate> regularDates = new ArrayList<LocalDate>();
 	for(int i =0;i<totalDates.size();i++) {
@@ -127,7 +151,7 @@ public ArrayList<LocalDate> datesWithEvents(String day,ArrayList<LocalDate> tota
 			   if(day.contains("F")) { 
 				   if(totalDates.get(i).getDayOfWeek().toString().toLowerCase().equals("friday")) {
 					   regularDates.add(totalDates.get(i)); }}
-				   if(day.contains("S")) { 
+				   if((day.contains("S") && !day.contains("Su")) ||(day.contains("SSu"))) { 
 					   if(totalDates.get(i).getDayOfWeek().toString().toLowerCase().equals("saturday")) {
 						   regularDates.add(totalDates.get(i)); }}
 					   if(day.contains("Su")) { 
@@ -197,8 +221,6 @@ public boolean foundRegularDateEvent(LocalDate dateWanted,String startDate,Strin
 		ArrayList<LocalDate>regDates = datesWithEvents(occursOn,totalDates);
 	
 		for(int i=0;i<regDates.size();i++) {
-			//String[] token = infoLine.split(" ");
-//if(dateManager.foundRegularDateEvent(regDates.get(i),startDate, endDate, occursOn))
 			event = new Event(eventName,timeInterval);
 			return event;
 		}
@@ -208,53 +230,23 @@ public boolean foundRegularDateEvent(LocalDate dateWanted,String startDate,Strin
 	return event;
 	}
 
-/*public EventDate getEventDate(String nameLine,String infoLine) throws Exception {
-	
-	EventDate eventDate = new EventDate(null,null);
-	String [] element  =infoLine.split(" "); 
-	String occursOn = element[0];
-	if(isRegular(infoLine)) {
-		String startDate=element[3];
-		String endDate=element[4];
-	
-		ArrayList<LocalDate> dates = datesWithEvents(occursOn,datesBetween(startDate, endDate));
-	  for(int i =0;i<dates.size();i++) {
-		 eventDate = new EventDate(dates.get(i),getEvent(nameLine,infoLine));
-		return eventDate;
-	  }
-	
-	}
-	else {
-		eventDate = new EventDate(stringToDate(occursOn),getEvent(nameLine,infoLine) );
-		return eventDate;
-	}
-	return eventDate;
-	
-	
-}*/
 
-public ArrayList<EventDate> getAllEventDates() throws ParseException {
-	/*ArrayList<EventDate> allEventDates = new ArrayList<>();
-	loadEvents();
-	while (fileScanner.hasNextLine()) {
-
-		String eventName = fileScanner.nextLine();
-		String infoLine = fileScanner.nextLine();
-		
-		allEventDates.add(getEventDate(eventName,infoLine));
-	}
-	fileScanner.close();
-	return allEventDates;
-		
-	*/
-	
+public ArrayList<EventDate> getAllEventDates() throws Exception {
+	ArrayList<EventDate> all= new ArrayList<EventDate>();
 	for(int i =0;i<allEventDates().size();i++) {
+		ArrayList<Event> eventsOnDate = getEventsOnDate(dateToString(allEventDates().get(i)));
+		for(int j =0;j<eventsOnDate.size();j++) {
 		
-		EventDate eventDate = new EventDate(allEventDates().get(i))
-	}
+			EventDate eventDate = new EventDate(allEventDates().get(i),eventsOnDate.get(j));
+			all.add(eventDate);
+		}
 	
-
+	}
+	return all;
 }
+
+
+
 
 public void printEventList() throws Exception {
 	
@@ -358,45 +350,13 @@ if(foundRegularDateEvent(stringToDate(dateWanted),startDate, endDate, occursOn))
 				System.out.println(eventsToSort.get(i).toString());
 			}
 	}
-		
-		/*loadEvents();
-		String date;
-		
-		
-		while (fileScanner.hasNextLine()) {
-			String eventName = fileScanner.nextLine();
-			String infoLine = fileScanner.nextLine();
-		
-			if(!isRegular(infoLine)) {
-				int spaceAfterDate = infoLine.indexOf(" ",0);
-				date = infoLine.substring(0,spaceAfterDate);
-				if(dateWanted.equals(date))
-					System.out.println(getEvent(eventName,infoLine).toString());
-				
-			}
-			else
-			{
-				String[] token = infoLine.split(" ");
-				String occursOn=token[0];
-				String startDate=token[3];
-				String endDate=token[4];
-if(foundRegularDateEvent(stringToDate(dateWanted),startDate, endDate, occursOn)) {
-	System.out.println(getEvent(eventName,infoLine).toString());
-	
-}
-			}
-		
-	}
-		System.out.println();
-		fileScanner.close();
-		
-	}*/
+			
 	/**
 	 * gets all dates that have events scheduled on them
 	 * @return
 	 * @throws ParseException
 	 */
-	public static ArrayList<LocalDate> allEventDates() throws ParseException{
+	public  ArrayList<LocalDate> allEventDates() throws ParseException{
 		loadEvents();
 		ArrayList<LocalDate> allEventDates = new ArrayList<>();
 		while (fileScanner.hasNextLine()) {

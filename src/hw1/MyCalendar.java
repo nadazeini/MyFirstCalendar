@@ -1,5 +1,7 @@
 package hw1;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.text.ParseException;
 import java.time.DayOfWeek;
 import java.util.Scanner;
@@ -225,26 +227,121 @@ public class MyCalendar {
 		
 	}
 
-	public static void eventList() throws ParseException {
-	ArrayList<LocalDate> allDates = 	eventsManager.allEventDates();
-	/**
-	 * 
-	 */
+	public static void eventList() throws Exception {
+	
+		eventsManager.printEventList();
+		mainMenu();
 	}
 
 	public static void goTo() throws Exception {
 		System.out.println("Enter the date you want to go to in  MM/DD/YYYY format:");
 		Scanner input = new Scanner(System.in);
-		String dateWanted = input.nextLine();
-		eventsManager.printEventsOnDate(dateWanted);
+		String date = input.nextLine();
+		if(date.length()==10) {
+			date = date.substring(0, date.length()-4)+date.substring(8);
+			}
+			else if (date.length()==8) {
+				
+					
+				date = date.substring(0,4)+date.substring(6);
+			}
+			else if(date.length()==9){
+				if(date.charAt(1)=='/') {
+					date = date.substring(0,5)+date.substring(7);
+				}
+				else
+					date=date.substring(0,5)+date.substring(7);
+			}
+				
+			else {
+				System.out.println("Date was not entered in the correct format");
+				mainMenu();
+			}
+		eventsManager.printEventsOnDate(date);
+		mainMenu();
 		
 		
 	}
 
-	public static void create() {
-		// TODO Auto-generated method stub
+	public static void create() throws Exception {
+		System.out.println("Enter a title:");
+		Scanner input = new Scanner(System.in);
+		String title = input.nextLine();
+		System.out.println("Enter date in MM/DD/YYYY format");
+		String date = input.nextLine();
+		if(date.length()==10) {
+		date = date.substring(0, date.length()-4)+date.substring(8);
+		}
+		else if (date.length()==8) {
+			
+				
+			date = date.substring(0,4)+date.substring(6);
+		}
+		else if(date.length()==9){
+			if(date.charAt(1)=='/') {
+				date = date.substring(0,5)+date.substring(7);
+			}
+			else
+				date=date.substring(0,5)+date.substring(7);
+		}
+			
+		else {
+			System.out.println("Date was not entered in the correct format");
+			mainMenu();
+		}
+	
+			
+		System.out.println("Enter starting time and ending time: 24 hour clock:");
+		String time = input.nextLine();
+		String[] token = time.split(" ") ;
 		
+		/**
+		 * check for overlap    
+		 */
+		ArrayList<LocalDate> eventDates = eventsManager.allEventDates();
+		TimeInterval timeInterval = new TimeInterval(eventsManager.stringToTime(token[0]),eventsManager.stringToTime(token[1]));
+		if(eventDates.contains(eventsManager.stringToDate(date))||eventDates.contains(eventsManager.stringToDate1(date))){
+			ArrayList<Event> eventsOnDate = eventsManager.getEventsOnDate(date);
+			
+			for(Event e : eventsOnDate) {
+				
+				if(!timeInterval.noOverlap(e.getTimeInterval(), timeInterval)){
+					System.out.println("Event could not be created because it overlaps with this event:");
+					EventDate eventOverLap = new EventDate(eventsManager.stringToDate(date),e);
+					System.out.println(eventOverLap.add());
+					mainMenu();
+					
+				}
+				else {
+
+					
+					EventDate eventCreated = new EventDate(eventsManager.stringToDate(date),new Event(title,timeInterval));
+					BufferedWriter writer = new BufferedWriter(new FileWriter("events.txt", true)); 
+				    writer.newLine(); 
+				    writer.write(eventCreated.add());
+				    System.out.println("Event added successfully!");
+				    writer.close();
+				    mainMenu();
+				
+				}
+					
+				
+				
+		}
+		}
+		else {
+
+			
+			EventDate eventCreated = new EventDate(eventsManager.stringToDate(date),new Event(title,timeInterval));
+		    BufferedWriter writer = new BufferedWriter(new FileWriter("events.txt", true)); 
+		    writer.newLine(); 
+		    writer.write(eventCreated.add());
+		    System.out.println("Event added successfully!");
+		    writer.close();
+		    mainMenu();
+		}
 	}
+		
 
 	/**
 	 * get day of the month of the current date
