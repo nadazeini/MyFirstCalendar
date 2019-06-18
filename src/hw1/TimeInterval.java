@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
  * @author nadazeini
  *
  */
-public class TimeInterval {
+public class TimeInterval  {
 	
 	private LocalTime start;
 	private LocalTime end;
@@ -25,9 +25,9 @@ public class TimeInterval {
 		this.start = start;
 		this.end = end;
 		
-		if(start.isAfter(end))
+		//if(start.isAfter(end))
 		{
-			throw new Exception("Start time should be less than end time");
+			//throw new Exception("Start time should be less than end time");
 		}
 		
 	}
@@ -52,5 +52,6 @@ public class TimeInterval {
 		return start.format(DateTimeFormatter.ofPattern("HH:mm")) 
 				+ "-"+end.format(DateTimeFormatter.ofPattern("HH:mm"));
 	}
+
  
 }

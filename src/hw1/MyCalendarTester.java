@@ -19,9 +19,13 @@ public class MyCalendarTester {
 
 	public static void runCalendar() throws Exception {
 		
-		MyCalendar cal = new MyCalendar();
-		cal.mainMenu();
-		
+		//MyCalendar cal = new MyCalendar();
+		//cal.mainMenu();
+		EventsManager eventsManager = new EventsManager();
+		eventsManager.printEventList();
+		for(int i =0;i<eventsManager.allEventDates().size();i++) {
+		System.out.println(eventsManager.allEventDates().get(i).toString());
+		}
 	}
 	
 	public static void main(String [] args) throws Exception {

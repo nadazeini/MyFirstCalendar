@@ -2,13 +2,14 @@ package hw1;
 
 import java.io.File;
 import java.time.LocalTime;
+import java.util.Comparator;
 import java.util.Scanner;
 /**
  * 
  * @author nadazeini
  *
  */
-public class Event {
+public class Event implements Comparable<Event> {
 
 	private String eventName;
 	private TimeInterval timeInterval;
@@ -35,8 +36,18 @@ public class Event {
     public String toString() {
     	return eventName + ": "+ timeInterval.toString();
     }
-   
-	
+	@Override
+	public int compareTo(Event e) {
+			if(this.getTimeInterval().getStart().isAfter(e.getTimeInterval().getStart())) {
+				return 1;
+			}
+			else if (this.getTimeInterval().getStart().isBefore(e.getTimeInterval().getStart()))
+				return -1;
+			else 
+				return 0;
+	}
+}
+ 
     
 
-}
+

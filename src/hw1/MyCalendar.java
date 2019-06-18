@@ -17,6 +17,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class MyCalendar {
+	static EventsManager eventsManager = new EventsManager();
 	/**
 	 * returns day number of events in a specific month and year 
 	 * @param month
@@ -25,13 +26,13 @@ public class MyCalendar {
 	 * @throws ParseException
 	 */
 	public static  ArrayList<Integer> dayOfMonthWithEvent(int month,int year) throws ParseException{
-		EventsManager events = new EventsManager();
+	
 		ArrayList<Integer> list = new ArrayList<>();
-		for(int i=0;i<events.allEventDates().size();i++) {
-			if(events.allEventDates().get(i).getMonthValue()==month &&
-			events.allEventDates().get(i).getYear()==year)
+		for(int i=0;i<eventsManager.allEventDates().size();i++) {
+			if(eventsManager.allEventDates().get(i).getMonthValue()==month &&
+			eventsManager.allEventDates().get(i).getYear()==year)
 		
-		list.add(events.allEventDates().get(i).getDayOfMonth());
+		list.add(eventsManager.allEventDates().get(i).getDayOfMonth());
 		
 		}
 		return list;
@@ -224,13 +225,19 @@ public class MyCalendar {
 		
 	}
 
-	public static void eventList() {
-		// TODO Auto-generated method stub
-		
+	public static void eventList() throws ParseException {
+	ArrayList<LocalDate> allDates = 	eventsManager.allEventDates();
+	/**
+	 * 
+	 */
 	}
 
-	public static void goTo() {
-		// TODO Auto-generated method stub
+	public static void goTo() throws Exception {
+		System.out.println("Enter the date you want to go to in  MM/DD/YYYY format:");
+		Scanner input = new Scanner(System.in);
+		String dateWanted = input.nextLine();
+		eventsManager.printEventsOnDate(dateWanted);
+		
 		
 	}
 
@@ -254,9 +261,9 @@ public class MyCalendar {
  * @param dateFromFile
  */
 	public static void printCompleteDate(String dateFromFile) {
-		EventsManager event = new EventsManager();
 	
-		LocalDate dateObj= 	event.stringToDate(dateFromFile);
+	
+		LocalDate dateObj= 	eventsManager.stringToDate(dateFromFile);
 		  
          
 
@@ -271,7 +278,7 @@ public class MyCalendar {
 	 * @throws Exception 
 	 */
 	public static void view() throws Exception {
-		EventsManager eventsManager = new EventsManager();
+		
 		Scanner input = new Scanner(System.in);
 		char c = 0 ;
 		int count = 0;
