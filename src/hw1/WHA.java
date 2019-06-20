@@ -3,9 +3,9 @@ package hw1;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
-
-public class MyCalendar  {
-	ArrayList<E>
+	private LocalDate date;
+	EventsManager eventsManager = new EventsManager();
+	private Event event;
 	public EventDate(LocalDate date , Event event) {
 		this.date=date;
 		this.event= event;

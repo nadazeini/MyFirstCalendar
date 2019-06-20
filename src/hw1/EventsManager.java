@@ -1,6 +1,7 @@
 package hw1;
 
 import java.io.File;
+import firstAssignment.MyCalendar;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -8,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.TreeSet;
 /**
@@ -207,10 +209,6 @@ public boolean foundRegularDateEvent(LocalDate dateWanted,String startDate,Strin
 		TimeInterval timeInterval = new TimeInterval(startTime,endTime);
 	if(!isRegular(infoLine)) {
 		 event = new Event(eventName,timeInterval);
-		//String[] token = date.split("/");
-		//int month = Integer.parseInt(token[0]);
-		//int day =Integer.parseInt(token[1]);
-		//int year =Integer.parseInt(token[2]);
 		return event;}
 	else {
 		String startDate=element[3];
@@ -296,10 +294,10 @@ public void printEventList() throws Exception {
 	
 	
 
-	public ArrayList<Event> getEventsOnDate(String dateWanted) throws Exception{
+	public ArrayList<Event> getEventsOnDate(LocalDate dateWanted) throws Exception{
 		ArrayList<Event> eventsOnDate = new ArrayList<>();
 		loadEvents();
-		String date;
+		
 		
 		while (fileScanner.hasNextLine()) {
 			String eventName = fileScanner.nextLine();
@@ -307,7 +305,7 @@ public void printEventList() throws Exception {
 		
 			if(!isRegular(infoLine)) {
 				int spaceAfterDate = infoLine.indexOf(" ",0);
-				date = infoLine.substring(0,spaceAfterDate);
+				LocalDate date = stringToDate(infoLine.substring(0,spaceAfterDate));
 				if(dateWanted.equals(date))
 					eventsOnDate.add(getEvent(eventName,infoLine));
 				
@@ -318,7 +316,7 @@ public void printEventList() throws Exception {
 				String occursOn=token[0];
 				String startDate=token[3];
 				String endDate=token[4];
-if(foundRegularDateEvent(stringToDate(dateWanted),startDate, endDate, occursOn)) {
+if(foundRegularDateEvent(dateWanted,startDate, endDate, occursOn)) {
 	eventsOnDate.add(getEvent(eventName,infoLine));
 	
 }
@@ -356,7 +354,7 @@ if(foundRegularDateEvent(stringToDate(dateWanted),startDate, endDate, occursOn))
 	 * @return
 	 * @throws ParseException
 	 */
-	public  ArrayList<LocalDate> allEventDates() throws ParseException{
+	public  ArrayList<LocalDate> allDatesWithEvents() throws ParseException{
 		loadEvents();
 		ArrayList<LocalDate> allEventDates = new ArrayList<>();
 		while (fileScanner.hasNextLine()) {
@@ -383,6 +381,6 @@ if(foundRegularDateEvent(stringToDate(dateWanted),startDate, endDate, occursOn))
 		
 	}
 	
-	
+
 	
 }

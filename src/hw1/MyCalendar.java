@@ -17,9 +17,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 public class MyCalendar {
 	static EventsManager eventsManager = new EventsManager();
+ {
+		// TODO Auto-generated constructor stub
+	}
 	/**
 	 * returns day number of events in a specific month and year 
 	 * @param month

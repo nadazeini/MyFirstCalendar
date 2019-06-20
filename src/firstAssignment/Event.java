@@ -1,9 +1,7 @@
-package hw1;
+package firstAssignment;
 
 import java.io.File;
-import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.Scanner;
 /**
@@ -49,5 +47,8 @@ public class Event implements Comparable<Event> {
 			else 
 				return 0;
 	}
-
 }
+ 
+    
+
+

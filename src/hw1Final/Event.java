@@ -1,13 +1,14 @@
-package hw1;
+package hw1Final;
+
 
 import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.Scanner;
 /**
- * 
+ * class represents an event 
+ * an event consists of the name and the timeInterval of that event
  * @author nadazeini
  *
  */
@@ -38,7 +39,9 @@ public class Event implements Comparable<Event> {
     public String toString() {
     	return eventName + ": "+ timeInterval.toString();
     }
-   
+   /**
+    * compares events by time interval to sort later by timeInterval
+    */
 	@Override
 	public int compareTo(Event e) {
 			if(this.getTimeInterval().getStart().isAfter(e.getTimeInterval().getStart())) {
@@ -49,5 +52,18 @@ public class Event implements Comparable<Event> {
 			else 
 				return 0;
 	}
+/**
+ * gets timeInterval and eventName into a string
+ * @return String
+ */
+	 public String toString1() {
 
+
+	return getTimeInterval().toString()+ " "+getEventName();
+	 }
 }
+
+    
+
+
+
