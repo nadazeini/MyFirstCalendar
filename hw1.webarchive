@@ -1,0 +1,248 @@
+bplist00Ñ_WebMainResourceÕ	
+^WebResourceURL_WebResourceFrameName_WebResourceData_WebResourceMIMEType_WebResourceTextEncodingName_@http://www.cs.sjsu.edu/~kim/cs151/contents/homework/hw1/hw1.htmlPO-<html><head></head><body><center>
+<font size="4">Summer 2019 CS151 Programming Assignment 1</font> <br>
+<font size="6">My First Calendar </font> <br>
+<font size="4">Instructor: Dr. Suneuy Kim</font>  <br>
+
+</center>
+<font size="3">
+<hr>
+<ul>
+<li> Java 8 introduced new APIs for Date and Time to address the shortcomings of the older java.util.Date and java.util.Calendar.  You have to use these new features of Java 8 to manipulate time information in your program. 
+Study the API of classes in java.time package to learn  
+how to manipulate day, week and month of calendar. 
+Here is <a href="./DateTimeExample.java"> an example code</a> to learn how to advance a calendar by month, to print a date in a specified format, and to figure out the day of the week for the 1st day of the given month.
+</li><li>In your implementation, ignore cases to recognize a user request and make sure to follow the given example format to enter data.    
+</li><li>I expect at least 4 classes in your design: 
+  <ul> 
+  <li> MyCalendarTester class with a main method
+  </li><li> MyCalendar class that defines an underlying data structure to hold events
+  </li><li> TimeInterval class that represents an interval of time, suitable for events (such as a meeting on a given date from 10:00 - 11:00). Provide a method to check whether two intervals overlap.  
+  </li><li> Event class that represent an event. An event consists of its name and a TimeInterval of the event. 
+  </li></ul>
+</li><li>The format of the output from your program can be different from that of the given example outputs. 
+</li></ul>
+<hr>
+In this assignment, you will design and implement a calendar similar to the one you can find on your phone. The calendar is going to be implemented as a console application.  
+
+<p>
+The initial  screen shows the current month looking like this. It also highlights today's date  using a pair of brackets. (It is not straightforward to highlight on the console. It is fine to use a pair of brackets for this purpose.)
+
+</p><pre>
+  March 2019
+Su Mo Tu We Th Fr Sa
+                1  2
+ 3  4  5  6  7  8  9
+10 11 12 13 14 15 16
+17 18 19 [20] 21 22 23  &lt;-- It is ok if this line is sticking out.
+24 25 26 27 28 29 30
+31
+
+
+</pre> 
+
+
+When the program starts, it loads events from events.txt and populates the calendar with them.  The events.txt is a text file of an event you need to prepare ahead of the program execution. 
+<p>
+There are two different types of events the program manages: regular and one-time. 
+</p><ul>
+<li>A regular event is one that is scheduled every week on the same day or days, such as a lecture that meets every Monday and Wednesday. 
+</li><li>A one-time event is scheduled on a particular date, such as 10/15/19, and doesn't repeat. 
+</li></ul>
+<p>
+
+In the event.txt file, each event takes up two lines. 
+
+</p><ul>
+<li>Regular event  <br>
+
+The first line contains the name of the event which may contain spaces. 
+The second line consists of  a sequence of day abbreviations (SMTWRFA, upper or lower case) followed by a starting date and an ending date of the regular event. 
+</li><li>One time event<br>
+The first line contains the name of the event which may contain spaces. 
+The second line consists of a date in the format mm/dd/yy, e.g.3/22/19. There cannot be any spaces within a date description. the date description is followed by a starting time and an ending time. For the starting and ending times, 
+only military 24-hour time will be used for simplicity.  For example,  18:15 instead of 6:15 pm  The minutes cannot be left off in which case zeros should be specified for the minutes, e.g. 14:00.
+</li></ul>
+<p>
+Here is a sample events.txt: 
+
+</p><pre>CS151 Lecture
+TR 10:30 11:45 1/24/19 5/9/19
+CS157C Lecture
+MW 11:45 13:15 1/28/19 5/13/19
+Interview at Apple
+9/28/19 9:30 11:30
+Dentist appt
+10/3/19 16:15 17:00
+Course Committee Meeting
+F 18:30 20:30  1/25/19 5/13/19
+</pre>
+
+After loading the events, the program prompts "Loading is done!". 
+
+<br>
+The program now displays a <b>main menu</b> with following options:
+View by, Create, Go to, Event list, Delete, and Quit. After the function
+of an option is done, the main menu is displayed again for the user
+to choose the next option.
+
+<pre>Select one of the following options:
+[V]iew by  [C]reate, [G]o to [E]vent list [D]elete  [Q]uit
+</pre>
+
+The user may enter one of the letters highlighted with a pair of the bracket to choose an option.
+For example,
+<pre>V
+</pre>
+will choose the View by option.
+
+
+
+<li>[V]iew by <br>
+The user can choose a Day or a Month view.  If a Day view is chosen, 
+the program prints today's date.  If there is an event(s) scheduled
+on that day, display them <b>in the order of start time </b>of the event. 
+With a Month view, it displays the <b>current</b> month and <b>highlights</b> day(s) with a pair of brackets {} if any event scheduled on that day. 
+After a view is displayed, the calendar gives
+the user three options: P, N, and G, where P, N, and M stand for Previous, Next and Go back to the main menu, respectively. The previous and next options allow the user to navigate the current view  back and forth.  If the day view was selected, the view goes back (P) and forth (N) by day. If the month view was chosen, the view goes back (P) and forth (N) by month. 
+Here are sample runs:
+
+<pre>[D]ay view or [M]view ? 
+</pre>
+If the user selects D, then today's date is displayed along with scheduled events. 
+<pre>Thu, March 19, 2019 
+CS151 Lecture : 10:30 - 11:45 
+
+[P]revious or [N]ext or [G]o back to main menu ? 
+</pre>
+
+If the user selects M, then 
+
+<pre>
+ March 2019
+Su Mo Tu We Th Fr Sa
+                1  2
+ 3  4  5  6  7  8  9
+10 11 12 13 14 15 16
+17 18 {19} 20 21 22 23
+24 25 26 27 28 29 30
+31
+
+
+[P]revious or [N]ext or [G]o back to main menu ? 
+
+</pre>
+Note: The following example code segment shows how to print the given date in a specified format. 
+<pre>LocalDate c = ....
+DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E, MMM d yyyy");
+System.out.println(" " + formatter.format(c));
+</pre>
+</li><li>[C]reate<br>
+This option allows the user to schedule an event. 
+The calendar asks the user to enter the title, date, starting time, and ending time of an event. 
+For simplicity, we consider <b>one-time event only</b> for the Create function. 
+Your program should check if a new event is a conflict with existing events. 
+Please stick to the following format to enter data:
+<ul>
+<li> Title: a string  (doesn't have to be one word) 
+</li><li> date: MM/DD/YYYY  
+</li><li> Starting time and ending time: 24 hour clock such as 06:00 for 6 AM and 15:30 for 3:30 PM. 
+</li></ul>
+
+</li><li>[G]o to <br>
+With this option, the user is asked to enter a date in the form of MM/DD/YYYY and then the calendar displays the Day view of the requested date including an event scheduled on that day in the order of starting time. 
+</li><li>[E]vent list<br>
+The user can browse scheduled events. 
+The calendar displays all the events scheduled in the calendar
+<b>in the order</b> of starting date and starting time. 
+An example presentation of events is as follows:
+(The format of event strings does not have to be exactly like this.) 
+
+<pre>2019
+  Friday March 15 13:15 - 14:00 Dentist 
+  Thursday April 25 15:00 - 16:00 Job Interview 
+2020 
+  ... 
+</pre>
+
+
+</li><li>[D]elete<br>
+The user can delete an event from the Calendar. There are <b>three</b> different ways to delete an event: Selected, All and DeleteRegular. Other types of deletion will not be considered for simplicity. 
+ <ul>
+ <li> [S]elected: the user specifies the date and name of an <b> ONE TIME</b> event. The specific one time event will be deleted. 
+ </li><li> [A]ll: the user specifies a date and  all <b>ONE TIME</b> events scheduled on the date  will be deleted. 
+ </li><li> [DR]: the user specifies the name of a <b>REGULAR</b> event. The specfied regular event will be deleted.  
+ </li></ul>
+
+<pre>[S]elected or [A]ll ? 
+</pre>
+If the user enters S, then the calendar asks for the date and displays all the events scheduled on that date. The program then asks the name of the event to be deleted and deletes the specified event. 
+If there is no such event, the program promotes an error message. 
+<pre>Enter the date [dd/mm/yyyy]
+03/15/2019 
+
+  13:15 - 14:00 Dentist 
+  17:00 - 17:45 Piano Lesson
+
+Enter the name of the event to delete: Dentist
+
+The event is deleted. Here is the current scheduled event:
+03/17/2018 
+  17:00 - 17:45 Piano Lesson
+
+</pre>
+</li><li>[Q]uit
+The program prompts "Good Bye", saves the current events in a file called output.txt, and  terminates. 
+
+
+The main menu will be displayed after each option is done. 
+It is crucial to have a user friendly interface for the user to enter input. For example, if the calendar needs a date from the user, suggest a specific format of the date for the user to use. Our class grader will be the user to operate your calendar, and you don't want to frustrate the user with a confusing interface.     
+<h3>Deliverable</h3>
+<ul>
+<li>Softcopy of your implementation. Submit it through the course web page:  Due: Wednesday, June 19, 11:58 pm  
+  <ul>
+  <li>All source programs you wrote (.java) required to run the application.
+    <ul>
+      <li>Name the class with main method as <b>MyCalendarTester</b> </li>
+      <li>Put javadoc comments in the source codes.</li>
+      <li>Submit .java files only.</li>
+      <li>Put all .java files, events.txt (with at least 5 regular events and 5 one time events scheduled on different dates), and output.txt in a directory called <b>hw1</b>
+      </li><li>Zip <b>hw1</b> to <b>hw1.zip</b> and submit it.</li>
+    </ul>
+  </li></ul>
+</li><li>Hardcopy in class  Due: THursday, June 20 in class 
+  <ol>
+  <li>All use cases 
+  </li><li>A set of CRC cards
+  </li><li>UML class diagram (simple version)
+  </li><li>One sequence diagram for the "to create an event" use case. 
+  </li><li> The following screenshots are required in the hard copy submission. Label each screenshot clearly. 
+<ul>
+<li> Screen 1: Show the initial calendar after starting the application
+</li><li> Screen 2: Show [E]vent list. The list is supposed to show events loaded from events.txt
+</li><li> Screen 3: Select [V]iew by and choose the Day view and show the 
+     current Day view. 
+</li><li> Screen 4: From the Day view, press [P]revious and show the previous day. 
+</li><li> Screen 5: From the previous view, press [N]ext THREE times and show the next day. 
+</li><li> Screen 6: Move the Day view to show a day with an event. 
+</li><li> Screen 7: Select [M]ain menu and select [V]iew by and [M]onth view and show the current Month view. 
+</li><li> Screen 8: Move the Month view to show a month with an event.
+</li><li> Screen 9: Select [C]reate and create an event. Show [E]vent list to confirm that the event is created. 
+</li><li> Screen 10: Select [C]reate and create an event with time conflict. Show you handled the time conflict. 
+</li><li> Screen 11: [G]o to a specific date with multiple events and show the       events are listed in order. 
+</li><li> Screen 12: Select [D]elete and [S]elected to delete a selected event scheduled on a specified date.  The screenshot should show the event list before and after the deletion. 
+</li><li> Screen 13: Select [D]elete and [DR]elected to delete a specified regular event.  The screenshot should show the event list before and after the deletion.
+</li><li> Screen 14: Select [Q]uit and shows the output.txt containing the remaining events.  
+</li><li>
+</li></ul>
+
+
+  </li></ol>
+  
+
+
+
+
+
+
+</li></ul></li></font></body></html>Ytext/htmlUUTF-8    ( 7 N ` v ” × Ø-ò-ü                           .
